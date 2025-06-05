@@ -1,0 +1,9 @@
+# Ignore Vim swap files
+*.swp
+
+# Ignore Vagrant directory
+.vagrant/
+
+# Ignore shell scripts
+*.sh
+

@@ -1,0 +1,7 @@
+timeseries
+avg(dt.host.memory.usage),
+by: { host.name },
+filter:in(host.name, 
+{"bookworm1", "bookworm2"}),
+interval:1m,
+from:-10m

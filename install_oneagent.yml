@@ -1,0 +1,21 @@
+- name: Install Dynatrace OneAgent
+  hosts: debian_vms
+  tasks:
+    - name: Copy Dynatrace OneAgent installer
+      ansible.builtin.copy:
+        src: Dynatrace-OneAgent-Linux-x86-1.313.52.20250602-150703.sh
+        dest: /home/vagrant/Dynatrace-OneAgent-Linux-x86-1.313.52.20250602-150703.sh
+        mode: '0755'
+
+    - name: Install Dynatrace OneAgent
+      ansible.builtin.command:
+        cmd: /bin/sh /home/vagrant/Dynatrace-OneAgent-Linux-x86-1.313.52.20250602-150703.sh --set-monitoring-mode=fullstack --set-app-log-content-access=true
+      become: yes
+      become_user: root
+      args:
+        creates: /opt/dynatrace/oneagent  # This prevents reinstallation if the OneAgent directory already exists
+
+    - name: Ensure Dynatrace OneAgent service is running
+      ansible.builtin.systemd:
+        name: oneagent
+        state: started

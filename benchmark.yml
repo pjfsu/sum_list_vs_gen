@@ -1,0 +1,16 @@
+- name: Performance Test List-Based Computation
+  hosts: debian_vm1
+  tasks:
+    - name: Execute Summation Using List Comprehension
+      ansible.builtin.command: python3 -c "[sum([i for i in range(10**6)]) for i in range(10**6)]"
+      async: 600
+      poll: 0
+
+- name: Performance Test Generator-Based Computation
+  hosts: debian_vm2
+  tasks:
+    - name: Execute Summation Using Generator Expression
+      ansible.builtin.command: python3 -c "[sum(i for i in range(10**6)) for i in range(10**6)]"
+      async: 600
+      poll: 0
+
